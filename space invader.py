@@ -9,6 +9,10 @@ clock = pygame.time.Clock() #set up clock
 
 #player
 keys = [False, False, False]
+#CONSTANTS
+LEFT=0
+RIGHT=1
+
 
 class Enemy:
     def __init__(self, xpos, ypos):
@@ -39,7 +43,7 @@ class spaceship:
         if keys[0]==True:
             vx=3
         elif keys[1]==True:
-            vx = -3
+            vx =-3
         else:
             vx = 0
 
@@ -50,7 +54,7 @@ class spaceship:
             pygame.draw.rect(screen, (0, 255,0), (self.xpos,self.ypos, 100, 20))
 
 #instantiate a spaceship object from the class
-Alan = spaceship(200,200)
+idk = spaceship(450,750)
 
 while True:  
     clock.tick(60)
@@ -79,8 +83,10 @@ while True:
 
 
     screen.fill((0,0,0)) #wipe screen so it doesn't smear
-    Alan.draw()
+    idk.draw()
+    
     
 
     pygame.display.flip()#this actually puts the pixel on the screen
+    
 pygame.quit()
