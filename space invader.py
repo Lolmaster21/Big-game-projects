@@ -6,6 +6,8 @@ pygame.display.set_caption("Space Invaders")  # sets the window title
 screen = pygame.display.set_mode((1000, 800))  # creates game screen
 screen.fill((0,0,0))
 clock = pygame.time.Clock() #set up clock
+gameover = False #variable to run our game loop
+
 
 
 #CONSTANTS
