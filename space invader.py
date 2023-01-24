@@ -21,10 +21,11 @@ class Enemy:
     def draw(self):
         if self.alive is True:
              py.draw.rect(screen, (0, 255,0), (self.xpos,self.ypos, 100, 20))
-             
+    
+    def move(self):
+        
         
             
-
 class spaceship:
     def __init__(self, xpos):
         self.xpos = xpos
