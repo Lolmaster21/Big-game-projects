@@ -22,7 +22,6 @@ class Enemy:
         if self.alive is True:
              py.draw.rect(screen, (0, 255,0), (self.xpos,self.ypos, 100, 20))
     
-    def move(self):
         
         
             
