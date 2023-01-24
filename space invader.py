@@ -1,4 +1,5 @@
 import pygame as py
+import random
 from math import *
 import time
 py.init()  
@@ -14,13 +15,15 @@ class Enemy:
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
-        self.isOnGround = False
         self.alive = True
+        
+        
     def draw(self):
         self.color = (138 +random.randint(-10,10), 23 +random.randint(-10,10), 17 +random.randint(-10,10))
         self.color2 = (138-22, 23-12, 17-10)
         if self.alive is True:
-            py.draw.rect(screen,(255,255,255),())
+             py.draw.rect(screen, (0, 255,0), (self.xpos,self.ypos, 100, 20))
+            
 
 class spaceship:
     def __init__(self, xpos):
@@ -53,7 +56,8 @@ class spaceship:
                     self.keys[self.SPACE]= False
     #Shooting
         if self.keys[self.SPACE] == True:
-            print("Shooting")
+            print("shooting")
+            
     #LEFT MOVEMENT
         if self.keys[self.LEFT] == True:
             self.vx=-3
@@ -71,12 +75,19 @@ class spaceship:
     def draw(self):
         if self.alive is True:
             py.draw.rect(screen, (0, 255,0), (self.xpos,750, 100, 20))
+            
     def update(self):
         self.draw()
         self.move()
+  
 
 #instantiate a spaceship object from the class
 player = spaceship(450)
+
+#Enemies
+e1 = Enemy(700,200)
+
+
 
 while True:  
     clock.tick(60)
@@ -88,6 +99,7 @@ while True:
 
     screen.fill((0,0,0)) #wipe screen so it doesn't smear
     player.update()
+    e1.draw()
     
 
     py.display.flip()#this actually puts the pixel on the screen
