@@ -23,6 +23,8 @@ class Enemy:
         self.color2 = (138-22, 23-12, 17-10)
         if self.alive is True:
              py.draw.rect(screen, (0, 255,0), (self.xpos,self.ypos, 100, 20))
+             
+        
             
 
 class spaceship:
