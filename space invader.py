@@ -16,22 +16,26 @@ class Enemy:
         self.xpos = xpos
         self.ypos = ypos
         self.alive = True
-        
-        
-    def draw(self):
-        if self.alive is True:
-             py.draw.rect(screen, (0, 255,0), (self.xpos,self.ypos, 100, 20))
+        self.bob = []
     
-        
+    def draw(self):
+        py.draw.rect(screen, (255, 255,255), (self.xpos,self.ypos, 40, 40))
         
             
+
+bob = []
+
+for i in range(4): #Rows 
+    for j in range(10): #Columns
+        bob.append(Enemy(j*90+75, i*60+50))
+    
 class spaceship:
     def __init__(self, xpos):
         self.xpos = xpos
         self.alive = True
         self.vx = 0
         self.keys = [False, False, False]
-        self.LEFT=0
+        self.LEFT= 0
         self.RIGHT=1
         self.SPACE = 2
 
@@ -84,8 +88,6 @@ class spaceship:
 #instantiate a spaceship object from the class
 player = spaceship(450)
 
-#Enemies
-e1 = Enemy(700,200)
 
 
 
@@ -99,7 +101,9 @@ while True:
 
     screen.fill((0,0,0)) #wipe screen so it doesn't smear
     player.update()
-    e1.draw()
+    
+    for i in range (len(bob)):
+        bob[i].draw()
     
 
     py.display.flip()#this actually puts the pixel on the screen
