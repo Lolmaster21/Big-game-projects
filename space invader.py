@@ -8,26 +8,41 @@ screen = py.display.set_mode((1000, 800))  # creates game screen
 screen.fill((0,0,0))
 clock = py.time.Clock() #set up clock
 
-
+timer = 0;
 
 
 class Enemy:
+    
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
         self.alive = True
-        self.bob = []
+        self.direction = 1
+    
+    
+    def move(self, time):
+        
+        if timer % 800 == 0:
+            self.ypos += 100 #Moves down
+            self.direction *=-1 #Flips direction
+            return 0 #Resets time to 0
+        
+        
+        if time % 100 == 0:
+            self.xpos+=50*self.direction #Moves right 
+        
+        return time 
+            
     
     def draw(self):
         py.draw.rect(screen, (255, 255,255), (self.xpos,self.ypos, 40, 40))
         
             
-
 bob = []
 
 for i in range(4): #Rows 
     for j in range(10): #Columns
-        bob.append(Enemy(j*90+75, i*60+50))
+        bob.append(Enemy(j*60+45, i*60+40))
     
 class spaceship:
     def __init__(self, xpos):
@@ -93,6 +108,7 @@ player = spaceship(450)
 
 while True:  
     clock.tick(60)
+    timer += 1
 
     
 
@@ -103,6 +119,7 @@ while True:
     player.update()
     
     for i in range (len(bob)):
+        timer = bob[i].move(timer)
         bob[i].draw()
     
 
