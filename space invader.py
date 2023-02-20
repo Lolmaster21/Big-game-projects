@@ -64,6 +64,7 @@ class Alien:
     
     def draw(self):
         pygame.draw.rect(screen,(250,250,250),(self.xpos,self.ypos, 40,40))
+
     
     def move(self,time):
         
@@ -170,10 +171,8 @@ while not gameover: #GAME LOOP------------------------------------------------
     if shoot == True:
         bullet.isAlive = True
 
-        if bullet.isAlive == True:
-            bullet.move(xpos+28, ypos)
-
-         
+    if bullet.isAlive == True:
+        bullet.move(xpos+28, ypos)
     
     #Bullet call
     bullet.draw()
