@@ -173,7 +173,17 @@ while not gameover: #GAME LOOP------------------------------------------------
 
     if bullet.isAlive == True:
         bullet.move(xpos+28, ypos)
+    else:
+        bullet.xpos = xpos + 28
+        bullet.ypos = ypos 
     
+       # if bullet.isAlive:
+            #for i in range(len(bob)):
+               # bullet.isAlive = bob[i].collide(bullet.xpos,bullet.ypos)
+            #    if bullet.isAlive == False:
+            #        break
+
+
     #Bullet call
     bullet.draw()
   
