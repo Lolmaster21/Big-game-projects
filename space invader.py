@@ -34,23 +34,10 @@ class Bullet:
             self.isAlive = False
             self.xpos = xpos
             self.ypos = ypos
-
             
     def draw(self):
         pygame.draw.rect(screen,(250,250,250),(self.xpos,self.ypos,3,20))
 
-        return True
-
-    def collide(self,BulletX,BulletY):
-        if self.isAlive:
-            if BulletX > self.xpos:
-                if BulletX < self.xpos + 40:
-                    if BulletY < self.ypos + 40:
-                       if BulletY > self.ypos:
-                          print("hit")
-                          self.isAlive = False
-                          return False 
-        return True 
 
 bullet = Bullet(xpos+28,ypos)
 
@@ -63,9 +50,13 @@ class Alien:
         self.direction = 1
     
     def draw(self):
-        pygame.draw.rect(screen,(250,250,250),(self.xpos,self.ypos, 40,40))
-
-    
+        if self.isAlive == True:
+            pygame.draw.rect(screen,(250,250,250),(self.xpos,self.ypos, 40,40))
+        
+        if self.isAlive == False:
+            return False
+            print("dead")
+            
     def move(self,time):
         
         if time % 800 == 0:
@@ -78,6 +69,16 @@ class Alien:
         
         return time
     
+    def collide(self, BulletX, BulletY):
+        if self.isAlive:
+            if BulletX > self.xpos:
+                if BulletX < self.xpos + 40:
+                    if BulletY < self.ypos + 40:
+                        if BulletY > self.ypos:
+                            print("HIT")
+                            self.isAlive = False
+                            return False
+        return True #otherwise  keep bullet alive
             
                
 
@@ -160,6 +161,9 @@ while not gameover: #GAME LOOP------------------------------------------------
             
     screen.fill((0,0,0)) #wipe screen so it doesn't smear
     
+    #Draws player
+    bullet.draw()
+
     
     #Player 1
     pygame.draw.rect(screen, (0, 250,0), (xpos, 750, 60, 20))
@@ -167,26 +171,28 @@ while not gameover: #GAME LOOP------------------------------------------------
     pygame.draw.rect(screen, (0, 250,0), (xpos+25, 736, 10, 20))
     pygame.draw.rect(screen, (0, 250,0), (xpos+28, 732, 4, 20))
 
-    #shoot bullet
+    
+        
+   #shoot bullet
     if shoot == True:
         bullet.isAlive = True
-
+    
     if bullet.isAlive == True:
         bullet.move(xpos+28, ypos)
+        if bullet.isAlive == True:
+            
+            for i in range (len(bob)):
+                bullet.isAlive = bob[i].collide(bullet.xpos, bullet.ypos)
+                if bullet.isAlive == False:
+                    break
     else:
         bullet.xpos = xpos + 28
         bullet.ypos = ypos 
     
-       # if bullet.isAlive:
-            #for i in range(len(bob)):
-               # bullet.isAlive = bob[i].collide(bullet.xpos,bullet.ypos)
-            #    if bullet.isAlive == False:
-            #        break
+    
 
 
-    #Bullet call
-    bullet.draw()
-  
+      
 
     #Enemy call function
     for i in range (len(bob)):
