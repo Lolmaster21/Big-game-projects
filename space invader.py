@@ -20,6 +20,54 @@ timer = 0;
 
 keys = [False, False, False, False,False, False, False, False] #this list holds whether each key has been pressed
 #this list holds whether each key has been pressed
+class Missles:
+    def __init__(self):
+        self.xpos = -10
+        self.ypos = -10
+        self.isAlive = False
+    
+    def draw(self):
+        pygame.draw.rect(screen,(250,250,250), (self.xpos,self.ypos,30,30))
+
+    
+        
+        
+    
+class Wall:
+    def __init__(self,xpos,ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.isAlive = True
+        self.numHits = 2
+        
+    def draw(self):  
+        if self.numHits == 0:
+            pygame.draw.rect(screen,(50,50,0), (self.xpos,self.ypos,30,30))
+        if self.numHits == 1:
+            pygame.draw.rect(screen,(150,150,10), (self.xpos,self.ypos,30,30))
+        if self.numHits == 2:
+            pygame.draw.rect(screen,(250,250,20), (self.xpos,self.ypos,30,30))
+        
+    
+    def collide(self, BulletX, BulletY):
+        if self.numHits <= 3:
+            if BulletX > self.xpos:
+                if BulletX < self.xpos + 40:
+                    if BulletY < self.ypos + 40:
+                        if BulletY > self.ypos:
+                            print("Smacked wall")
+                            self.numHits -= 1
+                            return False 
+        
+        return True 
+                            
+walls = []
+for k in range(4):
+    for i in range(2):
+        for j in range(3):
+            walls.append(Wall(j*30+200*k+150, i*30+600))
+
+
 
 class Bullet:
     def __init__(self,xpos,ypos):
@@ -37,7 +85,7 @@ class Bullet:
             
     def draw(self):
         pygame.draw.rect(screen,(250,250,250),(self.xpos,self.ypos,3,20))
-
+    
 
 bullet = Bullet(xpos+28,ypos)
 
@@ -55,7 +103,6 @@ class Alien:
         
         if self.isAlive == False:
             return False
-            print("dead")
             
     def move(self,time):
         
@@ -126,11 +173,6 @@ while not gameover: #GAME LOOP------------------------------------------------
                 keys[SPACE]= False
                 shoot = False
 
-            
-   
-
-  
-
     #LEFT MOVEMENT
     if keys[LEFT]==True:
         vx=-3
@@ -153,27 +195,9 @@ while not gameover: #GAME LOOP------------------------------------------------
     
     #Physics section--------------------------------------------------------------
     for i in range(len(bob)):
-        bob[i].move(timer)     
-
-
-  
-    # RENDER Section--------------------------------------------------------------------------------
-            
-    screen.fill((0,0,0)) #wipe screen so it doesn't smear
-    
-    #Draws player
-    bullet.draw()
-
-    
-    #Player 1
-    pygame.draw.rect(screen, (0, 250,0), (xpos, 750, 60, 20))
-    pygame.draw.rect(screen, (0, 250,0), (xpos+5, 745, 50, 20))
-    pygame.draw.rect(screen, (0, 250,0), (xpos+25, 736, 10, 20))
-    pygame.draw.rect(screen, (0, 250,0), (xpos+28, 732, 4, 20))
-
-    
+        bob[i].move(timer)
         
-   #shoot bullet
+    #shoot bullet
     if shoot == True:
         bullet.isAlive = True
     
@@ -185,14 +209,39 @@ while not gameover: #GAME LOOP------------------------------------------------
                 bullet.isAlive = bob[i].collide(bullet.xpos, bullet.ypos)
                 if bullet.isAlive == False:
                     break
+            
+    #Shoots wall
+        if bullet.isAlive == True:
+            
+            for i in range(len(walls)):
+                bullet.isAlive = walls[i].collide(bullet.xpos, bullet.ypos)
+                if bullet.isAlive == False:
+                    break    
     else:
         bullet.xpos = xpos + 28
         bullet.ypos = ypos 
+
+  
+    # RENDER Section--------------------------------------------------------------------------------
+            
+    screen.fill((0,0,0)) #wipe screen so it doesn't smear
     
+    #Draws players bullet
+    bullet.draw()
+ 
+
+    
+    #Player 1
+    pygame.draw.rect(screen, (0, 250,0), (xpos, 750, 60, 20))
+    pygame.draw.rect(screen, (0, 250,0), (xpos+5, 745, 50, 20))
+    pygame.draw.rect(screen, (0, 250,0), (xpos+25, 736, 10, 20))
+    pygame.draw.rect(screen, (0, 250,0), (xpos+28, 732, 4, 20))    
     
 
 
-      
+    #incoming walls
+    for i in range(len(walls)):
+        walls[i].draw()
 
     #Enemy call function
     for i in range (len(bob)):
