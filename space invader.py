@@ -17,7 +17,8 @@ shoot = False
 xpos = 430 #xpos of player
 ypos = 750 #ypos of player
 vx = 0 #x velocity of player
-timer = 0 
+timer = 0
+lives = 3
 
 keys = [False, False, False, False,False, False, False, False] #this list holds whether each key has been pressed
 #this list holds whether each key has been pressed
@@ -28,11 +29,13 @@ class Missles:
         self.isAlive = False
     
     def draw(self):
-        pygame.draw.rect(screen,(250,250,250), (self.xpos,self.ypos,10,10))
+        if self.isAlive == True:
+            pygame.draw.rect(screen,(250,250,250), (self.xpos,self.ypos,10,10))
 
     def move(self):
         if self.isAlive == True:
            self.ypos += 5
+           
 
         if self.ypos == 800:
             self.isAlive = False
@@ -147,7 +150,7 @@ for i in range(4):
         
    
 
-while not gameover: #GAME LOOP------------------------------------------------
+while(lives != 0): #GAME LOOP------------------------------------------------
     clock.tick(60) #FPS
     timer += 1
     
@@ -246,13 +249,27 @@ while not gameover: #GAME LOOP------------------------------------------------
                     rockets[i].ypos = bob[pick].ypos
                     break 
 
-    for l in range(len(walls)):
+    for i in range(len(walls)):
         for j in range (len(rockets)):
             if rockets[j].isAlive == True:
                 if walls[i].collide(rockets[j].xpos, rockets[j].ypos) == False:
                     rockets[j].isAlive == False
                     break
-           
+    
+    #player health collision 
+    for i in range(len(rockets)):
+        if rockets[i].isAlive:
+            if rockets[i].xpos>xpos:
+                if rockets[i].xpos < xpos +40:
+                    if rockets[i].ypos < ypos +40:
+                        if rockets[i].ypos > ypos:
+                            print(lives)
+                            lives -= 1
+                            xpos = 430
+                            ypos = 750
+                            if lives == 0:
+                                print("Game over T-T")
+                            
   
     # RENDER Section--------------------------------------------------------------------------------
             
