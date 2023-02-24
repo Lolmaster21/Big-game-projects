@@ -246,7 +246,13 @@ while not gameover: #GAME LOOP------------------------------------------------
                     rockets[i].ypos = bob[pick].ypos
                     break 
 
-
+    for l in range(len(walls)):
+        for j in range (len(rockets)):
+            if rockets[j].isAlive == True:
+                if walls[i].collide(rockets[j].xpos, rockets[j].ypos) == False:
+                    rockets[j].isAlive == False
+                    break
+           
   
     # RENDER Section--------------------------------------------------------------------------------
             
