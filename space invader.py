@@ -22,28 +22,26 @@ timer = 0
 keys = [False, False, False, False,False, False, False, False] #this list holds whether each key has been pressed
 #this list holds whether each key has been pressed
 class Missles:
-    def __init__(self,xpos,ypos):
+    def __init__(self):
         self.xpos = -10
         self.ypos = -10
         self.isAlive = False
     
     def draw(self):
-        if self.isAlive == True:
-          pygame.draw.rect(screen,(250,250,250), (self.xpos,self.ypos,10,10))
+        pygame.draw.rect(screen,(250,250,250), (self.xpos,self.ypos,10,10))
 
     def move(self):
         if self.isAlive == True:
-            self.ypos += 5
+           self.ypos += 5
 
-        if self.ypos < 800:
+        if self.ypos == 800:
             self.isAlive = False
-            self.xpos = xpos
-            self.ypos = ypos
+
 
 rockets = []
-missle = Missles(xpos,ypos)
-for l in range(10):
-    rockets.append(Missles(l*70+50, l*70+30))
+missle = Missles()
+for i in range(10):
+    rockets.append(Missles())
 
 
 
@@ -150,7 +148,7 @@ for i in range(4):
    
 
 while not gameover: #GAME LOOP------------------------------------------------
-    clock.tick(100) #FPS
+    clock.tick(60) #FPS
     timer += 1
     
     
@@ -210,13 +208,12 @@ while not gameover: #GAME LOOP------------------------------------------------
     for i in range(len(bob)):
         bob[i].move(timer)
 
-    for l in range(len(rockets)):
-        rockets[l].move()
+    for i in range(len(rockets)):
+        rockets[i].move()
         
     #shoot bullet
     if shoot == True:
         bullet.isAlive = True
-    
     if bullet.isAlive == True:
         bullet.move(xpos+28, ypos)
         if bullet.isAlive == True:
@@ -237,9 +234,17 @@ while not gameover: #GAME LOOP------------------------------------------------
         bullet.ypos = ypos 
     
     #Fire at will
-   # lol = rand.randrange(0,99)
-    #if lol < 2:
-     #   bob[i] 
+    lol = random.randrange(0,99)
+    if lol < 2:
+        print("bombs?")
+        pick = random.randrange(len(bob))
+        if bob[pick].isAlive == True:
+            for i in range(len(rockets)):
+                if rockets[i].isAlive == False:
+                    rockets[i].isAlive = True
+                    rockets[i].xpos = bob[pick].xpos+5
+                    rockets[i].ypos = bob[pick].ypos
+                    break 
 
 
   
