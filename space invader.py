@@ -253,7 +253,7 @@ while(lives != 0): #GAME LOOP------------------------------------------------
         for j in range (len(rockets)):
             if rockets[j].isAlive == True:
                 if walls[i].collide(rockets[j].xpos, rockets[j].ypos) == False:
-                    rockets[j].isAlive == False
+                    rockets[j].isAlive = False
                     break
     
     #player health collision 
