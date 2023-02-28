@@ -30,7 +30,7 @@ class Missles:
     
     def draw(self):
         if self.isAlive == True:
-            pygame.draw.rect(screen,(250,250,250), (self.xpos,self.ypos,10,10))
+            pygame.draw.rect(screen,(250,250,250),(self.xpos,self.ypos,3,20))
 
     def move(self):
         if self.isAlive == True:
