@@ -1,4 +1,5 @@
 import pygame
+import time
 import random 
 pygame.init()  
 pygame.display.set_caption("Space Invaders")  # sets the window title
@@ -267,6 +268,7 @@ while(lives != 0): #GAME LOOP------------------------------------------------
                             lives -= 1
                             xpos = 430
                             ypos = 750
+                            time.sleep(1)
                             if lives == 0:
                                 print("Game over T-T")
                             
